@@ -13,7 +13,7 @@ public:
 	} 
 };
 static MilkTile* Milk;
-static bool CreativeInvStarted = false;
+static bool CreativeInvStarted;
 
 std::map <std::string, std::string>* I18n$strings;
 static void(*Tile$setDescriptionId)(Tile*, std::string const&);
@@ -22,6 +22,7 @@ static void (*Minecraft$selectLevel_real)(Minecraft*, std::string const&, std::s
 static void (*CreativeInventryScreen_populateTile_real)(Tile*, int, int);
 
 static void Minecraft$selectLevel_hook(Minecraft* minecraft, std::string const& string1, std::string const& string2, LevelSettings const& settings) {
+    creativeInvStarted = false;
     (*I18n$strings)["tile.Milk.name"]="Milk";
     Minecraft$selectLevel_real(minecraft, string1, string2, settings);
 }
