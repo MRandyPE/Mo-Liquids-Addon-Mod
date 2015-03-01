@@ -13,6 +13,7 @@ public:
 	} 
 };
 static MilkTile* Milk;
+//bugs with the CreativeInvStarted boolian
 static bool CreativeInvStarted;
 
 std::map <std::string, std::string>* I18n$strings;
@@ -36,6 +37,7 @@ static void Tile$initTiles_hook() {
 }
 
 static void CreativeInventryScreen_populateTile_hook(Tile* tile, int count, int damage){
+	//says creativeInvStarted not in scope of function
 	if (!creativeInvStarted) {
 		CreativeInventryScreen_populateTile_real(Milk, 1, 0);
 		creativeInvStarted = true;
