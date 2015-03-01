@@ -7,12 +7,12 @@
 #include <map>
 #include <Substrate.h>
 
-class TntTile: public Tile {
+class MilkTile: public Tile {
 public:
-	TntTile(int id, std::string textureName, Material const* material): Tile(id, textureName, material) {
+	MilkTile(int id, std::string textureName, Material const* material): Tile(id, textureName, material) {
 	} 
 };
-static TntTile* TNTx5;
+static MilkTile* Milk;
 static bool CreativeInvStarted = false;
 
 std::map <std::string, std::string>* I18n$strings;
@@ -22,21 +22,21 @@ static void (*Minecraft$selectLevel_real)(Minecraft*, std::string const&, std::s
 static void (*CreativeInventryScreen_populateTile_real)(Tile*, int, int);
 
 static void Minecraft$selectLevel_hook(Minecraft* minecraft, std::string const& string1, std::string const& string2, LevelSettings const& settings) {
-    (*I18n$strings)["tile.TNTx5.name"]="§9TNTx5";
+    (*I18n$strings)["tile.Milk.name"]="Milk";
     Minecraft$selectLevel_real(minecraft, string1, string2, settings);
 }
 
 static void Tile$initTiles_hook() {
 	Tile$initTiles_real();
-	TNTx5 = new TntTile(25, "cauldron_side", &Material::explosive);
-	Tile::tiles[25] = TNTx5;
+	Milk = new MilkTile(25, "flowing_water", &Material::water);
+	Tile::tiles[25] = Milk;
 	TileItem* tileItem = new TileItem(25 - 256);
-    Tile$setDescriptionId(TNTx5, "TNTx5");
+    Tile$setDescriptionId(Milk, "Milk");
 }
 
 static void CreativeInventryScreen_populateTile_hook(Tile* tile, int count, int damage){
 	if (!creativeInvStarted) {
-		CreativeInventryScreen_populateTile_real(TNTx5, 1, 0);
+		CreativeInventryScreen_populateTile_real(Milk, 1, 0);
 		creativeInvStarted = true;
 	}
 	CreativeInventryScreen_populateTile_real(tile, count, damage);
