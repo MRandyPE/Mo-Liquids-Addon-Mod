@@ -18,6 +18,7 @@ static int worldLoaded = 0;
 
 std::map <std::string, std::string>* I18n$strings;
 static void(*Tile$setDescriptionId)(Tile*, std::string const&);
+static void(*Tile$isLiquidTile)(Tile*);
 static void(*Tile$initTiles_real)();
 static void (*Minecraft$selectLevel_real)(Minecraft*, std::string const&, std::string const&, LevelSettings const&);
 static void (*CreativeInventryScreen_populateTile_real)(Tile*, int, int);
@@ -33,6 +34,7 @@ static void Tile$initTiles_hook() {
 	Tile::tiles[25] = Milk;
 	TileItem* tileItem = new TileItem(25 - 256);
     Tile$setDescriptionId(Milk, "Milk");
+    Tile$isLiquidTile(Milk);
 }
 
 static void CreativeInventryScreen_populateTile_hook(Tile* tile, int count, int damage){
@@ -55,6 +57,7 @@ void* populateTile = dlsym(RTLD_DEFAULT, "_ZN23CreativeInventoryScreen12populate
 MSHookFunction(populateTile, (void*) &CreativeInventryScreen_populateTile_hook, (void**) &CreativeInventryScreen_populateTile_real);
 
 Tile$setDescriptionId = (void(*)(Tile*, std::string const&)) dlsym(RTLD_DEFAULT, "_ZN4Tile16setDescriptionIdERKSs");
+Tile$isLiquidTile = (void(*)(Tile*)) dlsym(RTLD_DEFAULT, "_ZNK4Tile12isLiquidTileEv");
 I18n$strings = (std::map <std::string, std::string>*) dlsym(RTLD_DEFAULT, "_ZN4I18n8_stringsE");
     
 	return JNI_VERSION_1_2;
