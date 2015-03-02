@@ -13,8 +13,8 @@ public:
 	} 
 };
 static MilkTile* Milk;
-//bugs with the CreativeInvStarted boolian
-static bool CreativeInvStarted;
+//bugs with the CreativeInvStarted int
+static int worldLoaded = 0;
 
 std::map <std::string, std::string>* I18n$strings;
 static void(*Tile$setDescriptionId)(Tile*, std::string const&);
@@ -23,7 +23,7 @@ static void (*Minecraft$selectLevel_real)(Minecraft*, std::string const&, std::s
 static void (*CreativeInventryScreen_populateTile_real)(Tile*, int, int);
 
 static void Minecraft$selectLevel_hook(Minecraft* minecraft, std::string const& string1, std::string const& string2, LevelSettings const& settings) {
-    creativeInvStarted = false;
+    worldLoaded = 1;
     (*I18n$strings)["tile.Milk.name"]="Milk";
     Minecraft$selectLevel_real(minecraft, string1, string2, settings);
 }
@@ -38,9 +38,9 @@ static void Tile$initTiles_hook() {
 
 static void CreativeInventryScreen_populateTile_hook(Tile* tile, int count, int damage){
 	//says creativeInvStarted not in scope of function
-	if (!creativeInvStarted) {
+	if (worldLoaded != 0) {
 		CreativeInventryScreen_populateTile_real(Milk, 1, 0);
-		creativeInvStarted = true;
+		creativeInvStarted = 0;
 	}
 	CreativeInventryScreen_populateTile_real(tile, count, damage);
 }
