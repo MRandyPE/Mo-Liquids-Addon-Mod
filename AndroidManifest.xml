@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="net.muse.blocktemplate.mcpeaddon"
+        package="net.mrandype.moliquids.mcpeaddon"
         android:versionCode="1"
         android:versionName="1.0">
 
@@ -14,7 +14,7 @@
 
     <!-- metadata specifying the library name. must match Android.mk.-->
     <meta-data android:name="net.zhuoweizhang.mcpelauncher.api.nativelibname"
-        android:value="exampleblock"/>
+        android:value="moliquids"/>
     </application>
 
 </manifest> 
