@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package net.muse.blocktemplate.mcpeaddon;
+package com.mrandype.moliquids.mcpeaddon;
 
 public final class R {
     public static final class attr {
