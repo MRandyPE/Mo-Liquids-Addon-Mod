@@ -15,9 +15,11 @@ class TilePos;
 class Vec3;
 class TextureUVCoordinateSet;
 class ItemInstance;
+class Inventory;
 class Minecraft;
 class GuiMessage;
 class LevelSettings;
+class Level;
 class CreativeInventoryScreen;
 
 //Defines our block materials
@@ -53,6 +55,16 @@ public:
 	static Material bed;
 };
 
+class LiquidTile {
+public:
+	char filler[0x8c];
+	LiquidTile(int, Material const*);
+	LiquidTile(int, Material const*, std::string const&, std::string const&);
+	virtual void animateTick(LiquidTile*, TileSource*, int, int, int, Random*);
+	virtual void getAABB(TileSource*, int, int, int, AABB&, int, bool, int);
+	virtual void getBrightness(LiquidTile*, TileSource*, int, int, int);
+	
+}
 //Defines our Tile methods
 class Tile {
 public:
@@ -139,6 +151,7 @@ public:
 	virtual void setTicking(bool); // 71
 	virtual void getSpawnResourcesAuxValue(int); // 72
 	virtual void init(); // 73
+	virtual bool isLiquidTile();
 
 	// static fields
 	static Tile* tiles[256];
@@ -159,7 +172,6 @@ Item(int);
 
 	// static methods
 	static void initItems();
-	virtual void setCategory(Item*, int);
 };
 
 class ItemInstance {
@@ -282,3 +294,9 @@ class MinecraftClient : public Minecraft {
 public:
 	void init();
 };
+
+typedef struct {
+int count; //0
+int damage; //4
+Item* item;//8
+} ItemInstance;
