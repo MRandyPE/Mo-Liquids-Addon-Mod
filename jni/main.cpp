@@ -32,7 +32,7 @@ std::map <std::string, std::string>* I18n$strings;
 static void(*Tile$setDescriptionId)(Tile*, std::string const&);
 static void(*Tile$initTiles_real)();
 static void (*Minecraft$selectLevel_real)(Minecraft*, std::string const&, std::string const&, LevelSettings const&);
-static void (*CreativeInventryScreen$populateTile_real)(Tile*, int, int);
+static void (*CreativeInventryScreen$populateTile_real)(void*, Tile*, int, int);
 static void (*Inventory$setupDefault_real)(Inventory*);
 static void (*Inventory$removeItemInstance)(Inventory*, ItemInstance*);
 static void (*Inventory$add)(Inventory*, ItemInstance*);
@@ -75,7 +75,7 @@ static void Tile$initTiles_hook() {
     Tile$setDescriptionId(Milk, "Milk");
 }
 
-static void CreativeInventryScreen$populateTile_hook(CreativeInventoryScreen* creativeInv, Tile* tile, int count, int damage){
+static void CreativeInventryScreen$populateTile_hook(void* creativeInv, Tile* tile, int count, int damage){
 	//says creativeInvStarted not in scope of function
 	if (worldLoaded == 0) {
 		CreativeInventryScreen$populateTile_real(creativeInv, Milk, 1, 0);

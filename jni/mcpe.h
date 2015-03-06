@@ -20,7 +20,6 @@ class Minecraft;
 class GuiMessage;
 class LevelSettings;
 class Level;
-class CreativeInventoryScreen;
 
 //Defines our block materials
 class Material {
