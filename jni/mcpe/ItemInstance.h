@@ -14,6 +14,14 @@ class CompoundTag;
 
 class ItemInstance {
 public:
+	int count; //0
+	int damage; //4
+	Item* item;//8
+	void* block; //12
+	bool wtf; //16
+	bool wtf2; //17
+	bool wtf3; //18
+	bool wtf4; //19
 	ItemInstance();
 	ItemInstance(int, int, int);
 	ItemInstance(bool);

@@ -5,4 +5,5 @@ class Inventory {
 public:
 	virtual void add(ItemInstance*);
 	virtual void removeItemInstance(const ItemInstance*);
+	virtual ItemInstance* getSelected();
 };

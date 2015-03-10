@@ -1,4 +1,6 @@
-#pragma once 
+#pragma once
+#include <string.h>
+#include "Material.h"
 #include "Tile.h"
 
 class MilkTile: public Tile {
@@ -7,8 +9,3 @@ public:
 	} 
 	virtual bool isLiquidTile();
 };
-
-bool MilkTile::isLiquidTile(){
-	return true;
-}
-

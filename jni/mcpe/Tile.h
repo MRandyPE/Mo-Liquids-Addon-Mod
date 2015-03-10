@@ -15,6 +15,7 @@ class Entity;
 class TextureUVCoordinateSet;
 class Vec3;
 class Mob;
+class Level;
 
 class Tile {
 public:
@@ -71,7 +72,7 @@ public:
 	virtual void stepOn(Entity*, int, int, int); // 41
 	virtual void fallOn(TileSource*, int, int, int, Entity*, float); // 42
 	virtual void getPlacementDataValue(Mob*, int, int, int, signed char, float, float, float, int); // 43
-	 // 44
+	virtual void prepareRender(TileSource*, int, int, int); // 44
 	virtual void attack(Player*, int, int, int); // 45
 	virtual void handleEntityInside(TileSource*, int, int, int, Entity*, Vec3&); // 46
 	virtual int getColor(int); // 47
@@ -92,6 +93,7 @@ public:
 	virtual TextureUVCoordinateSet getTextureNum(int); // 62
 	virtual void getMobToSpawn(TileSource&, TilePos const&) const; // 63
 	virtual int getIconYOffset() const; // 64
+	virtual void setCategory(int);
 	virtual void setShape(float, float, float, float, float, float); // 65
 	virtual void setSoundType(Tile::SoundType const&); // 66
 	virtual void setLightBlock(int); // 67
@@ -108,5 +110,4 @@ public:
 
 	// static methods
 	static void initTiles();
-	static void prepareRender(TileSource*, int, int, int);
 };

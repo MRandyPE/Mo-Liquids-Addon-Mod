@@ -6,5 +6,5 @@ class GameMode {
 public:
 	virtual bool isSurvivalType();
 	
-	static void initPlayer(Player*);
+	static void initPlayer(GameMode*, Player*);
 };
