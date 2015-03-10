@@ -106,7 +106,7 @@ public:
 	virtual bool isLiquidTile();
 
 	// static fields
-	static Tile* tiles[256];
+	static Tile* tiles[255];
 
 	// static methods
 	static void initTiles();
