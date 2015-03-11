@@ -1,6 +1,6 @@
 #pragma once
 #include <string.h>
-#include "Material.h"
+#include "../Material.h"
 #include "Tile.h"
 
 class MilkTile: public Tile {
