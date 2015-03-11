@@ -23,7 +23,8 @@ GameMode* theGamemode;
 TileSource* theTileSource;
 const int MILK_TILE_ID = 25;
 
-static void (*GameMode$initPlayer_real)(GameMode*, Player*);
+GameMode::InitPlayerReal GameMode::initPlayer_real = NULL;
+
 std::map <std::string, std::string>* I18n$strings;
 static void (*Tile$initTiles_real)();
 static void (*Minecraft$selectLevel_real)(Minecraft*, std::string const&, std::string const&, LevelSettings const&);
@@ -48,9 +49,9 @@ static void Inventory$setupDefault_hook(Inventory* inventory){
 	Inventory$setupDefault_real(inventory);
 }
 
-static void GameMode$initPlayer_hook(GameMode* gm, Player* player) {
+void GameMode::initPlayer_hook(GameMode* gm, Player* player) {
 	theGamemode = gm;
-	GameMode$initPlayer_real(gm, player);
+	GameMode::initPlayer_real(gm, player);
 }
 
 static void Level$onSourceCreated_hook(Level* level, TileSource* ts) {
@@ -83,7 +84,7 @@ static void CreativeInventoryScreen$populateTile_hook(void* creativeInv, Tile* t
 static void ItemInstance$useOn_hook(ItemInstance* itemStack, Player* player, int x, int y, int z, signed char ch1, float f1, float f2, float f3) {
 	ItemInstance$useOn_real(itemStack, player, x, y, z, ch1, f1, f2, f3);
 	if(itemStack->item->id == 325 && itemStack->damage == 1) {
-		theTileSource->setTileAndData({x, y + 1, z}, {25, 0}, 3);
+		theTileSource->setTileAndData(x, y + 1, z, {25, 0}, 3);
 		/*
 		if(theGamemode->isSurvivalType() == true) {
 			theInventory->removeItemInstance(itemStack);
@@ -100,7 +101,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 	void* Minecraft$tick = dlsym(RTLD_DEFAULT, "_ZN9Minecraft4tickEii");
 	void* populateTile = dlsym(RTLD_DEFAULT, "_ZN23CreativeInventoryScreen12populateItemEP4Tileii");
 	void* Inventory$setupDefault = dlsym(RTLD_DEFAULT, "_ZN9Inventory12setupDefaultEv");
-	void* GameMode$initPlayer = dlsym(RTLD_DEFAULT, "_ZN8GameMode10initPlayerEP6Player");
 	void* Level$onSourceCreated = dlsym(RTLD_DEFAULT, "_ZN5Level15onSourceCreatedEP10TileSource");
 	void* ItemInstance$useOn = dlsym(RTLD_DEFAULT, "_ZN12ItemInstance5useOnEP6Playeriiiafff");
 	
@@ -111,7 +111,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 	MSHookFunction(populateTile, (void*) &CreativeInventoryScreen$populateTile_hook, (void**) &CreativeInventoryScreen$populateTile_real);
 	MSHookFunction(Minecraft$tick, (void*) &Minecraft$tick_hook, (void**) &Minecraft$tick_real);
 	MSHookFunction(Inventory$setupDefault, (void*) &Inventory$setupDefault_hook, (void**) &Inventory$setupDefault_real);
-	MSHookFunction(GameMode$initPlayer, (void*) &GameMode$initPlayer_hook, (void**) &GameMode$initPlayer_real);
+	MSHookFunction((void*) &GameMode::initPlayer, (void*) &GameMode::initPlayer_hook, (void**) &GameMode::initPlayer_real);
 	MSHookFunction(Level$onSourceCreated, (void*) &Level$onSourceCreated_hook, (void**) &Level$onSourceCreated_real);
 	
 	I18n$strings = (std::map <std::string, std::string>*) dlsym(RTLD_DEFAULT, "_ZN4I18n8_stringsE");
