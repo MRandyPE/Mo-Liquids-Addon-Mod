@@ -11,7 +11,7 @@
 #include "mcpe/ItemInstance.h"
 #include "mcpe/Tile.h"
 #include "mcpe/Minecraft.h"
-#include "mcpe/Inventory.h"
+#include "mcpe/inventory/Inventory.h"
 #include "mcpe/GameMode.h"
 #include "mcpe/TileItem.h"
 #include "mcpe/Item.h"
@@ -87,7 +87,7 @@ static void ItemInstance$useOn_hook(ItemInstance* itemStack, Player* player, int
 		theTileSource->setTileAndData(x, y + 1, z, {25, 0}, 3);
 		/*
 		if(theGamemode->isSurvivalType() == true) {
-			theInventory->removeItemInstance(itemStack);
+			itemStack->count--;
 			ItemInstance* emptyBucket = new ItemInstance(325, 1, 0);
 			theInventory->add(emptyBucket);
 		}*/
