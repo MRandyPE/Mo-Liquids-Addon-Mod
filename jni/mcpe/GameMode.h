@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TilePos.h"
-#include "ItemInstance.h"
+#include "tile/TilePos.h"
+#include "item/ItemInstance.h"
 
 class Minecraft;
 class Player;

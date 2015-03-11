@@ -6,15 +6,15 @@
 #include <stdint.h>
 #include <map>
 #include <Substrate.h>
-#include "mcpe/MilkTile.h"
-#include "mcpe/TileSource.h"
-#include "mcpe/ItemInstance.h"
-#include "mcpe/Tile.h"
+#include "mcpe/tile/MilkTile.h"
+#include "mcpe/tile/TileSource.h"
+#include "mcpe/item/ItemInstance.h"
+#include "mcpe/tile/Tile.h"
 #include "mcpe/Minecraft.h"
 #include "mcpe/inventory/Inventory.h"
 #include "mcpe/GameMode.h"
-#include "mcpe/TileItem.h"
-#include "mcpe/Item.h"
+#include "mcpe/item/TileItem.h"
+#include "mcpe/item/Item.h"
 
 MilkTile* Milk;
 int worldLoaded = 0;
@@ -63,6 +63,8 @@ static void Tile$initTiles_hook() {
 	Tile$initTiles_real();
 	Milk = new MilkTile(MILK_TILE_ID, "flowing_water", &Material::water);
 	Tile::tiles[MILK_TILE_ID] = Milk;
+	Tile::translucency[MILK_TILE_ID] = 0.5F;
+	Tile::solid[MILK_TILE_ID] = false;
 	TileItem* tileItem = new TileItem(MILK_TILE_ID - 256);
     Milk->setDescriptionId("Milk");
 	Milk->setCategory(1);
