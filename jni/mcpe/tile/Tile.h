@@ -7,6 +7,7 @@
 #include "TilePos.h"
 #include "../Material.h"
 #include "../item/ItemInstance.h"
+#include "../tileentity/TileEntityTypeEnum.h"
 
 class AABB;
 class Random;

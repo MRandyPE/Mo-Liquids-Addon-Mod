@@ -17,7 +17,7 @@
 #include "mcpe/item/Item.h"
 
 MilkTile* Milk;
-int worldLoaded = 0;
+bool tileAdded = false;
 Inventory* theInventory;
 GameMode* theGamemode;
 TileSource* theTileSource;
@@ -63,7 +63,7 @@ static void Tile$initTiles_hook() {
 	Tile$initTiles_real();
 	Milk = new MilkTile(MILK_TILE_ID, "flowing_water", &Material::water);
 	Tile::tiles[MILK_TILE_ID] = Milk;
-	Tile::translucency[MILK_TILE_ID] = 0.5F;
+	Tile::translucency[MILK_TILE_ID] = 10.0F;
 	Tile::solid[MILK_TILE_ID] = false;
 	TileItem* tileItem = new TileItem(MILK_TILE_ID - 256);
     Milk->setDescriptionId("Milk");
@@ -75,10 +75,10 @@ static void Item$initItems_hook() {
 }
 
 static void CreativeInventoryScreen$populateTile_hook(void* creativeInv, Tile* tile, int count, int damage){
-	//says creativeInvStarted not in scope of function
-	if (worldLoaded == 0) {
-		CreativeInventoryScreen$populateTile_real(creativeInv, Milk, 1, 0);
-		worldLoaded = 1;
+	if(tileAdded = false) {
+		Tile* creativeAdd = Tile::tiles[MILK_TILE_ID];
+		CreativeInventoryScreen$populateTile_real(creativeInv, creativeAdd, 1, 0);
+		tileAdded = true;
 	}
 	CreativeInventoryScreen$populateTile_real(creativeInv, tile, count, damage);
 }
