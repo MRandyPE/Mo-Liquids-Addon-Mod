@@ -8,6 +8,8 @@
 #include "../Material.h"
 #include "../item/ItemInstance.h"
 #include "../tileentity/TileEntityTypeEnum.h"
+#include "TileTypeEnum.h"
+#include "RenderLayerEnum.h"
 
 class AABB;
 class Random;
@@ -18,6 +20,8 @@ class TextureAtlas;
 class Vec3;
 class TextureAtlasTextureItem;
 class TextureUVCoordinateSet;
+
+typedef unsigned char TileID;
 
 class Tile {
 public:
@@ -53,15 +57,30 @@ public:
 public:
 	// Size : 140
 	//void **vtable;		// 0
-	char filler1[64];		// 4
-	unsigned char _id;		// 68
-	char filler2[12];		// 72
-	int _rendererId;		// 84
-	char filler3[4];		// 88
-	TileEntityType _type;	// 92
-	char filler4[28];		// 96
-	int _category;			// 124
-	char filler5[12];		// 128	
+	char filler1[52];					//4
+	bool _replaceable;					//56
+	AABB* shape;							//60
+	TextureUVCoordinateSet* tex;			//64
+	const TileID id;					//68
+	const SoundType* soundType;			//72
+	RenderLayer renderLayer;			//76
+	bool canBuildOver;					//80
+	int renderShape;					//84
+	TileType tileType;					//88
+	TileEntityType tileEntityType;		//92
+	float thickness;					//96
+	bool canSlide;						//100
+	bool canInstatick;					//104
+	float gravity;						//108
+	const Material* material;			//112
+	float friction;						//116
+	float destroyTime;					//120
+	float explosionResistance;			
+	int creativeCategory;				//124
+	bool fancy;							//128
+	char filler2[4];		//std::shared_ptr<TextureAtlas> _terrainTextureAtlas;  //132
+	unsigned int faceTextureIsotropic;	//136
+	std::string descriptionId;			//140
 
 public:
 	Tile(int, const Material *);

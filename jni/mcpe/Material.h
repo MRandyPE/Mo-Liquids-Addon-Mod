@@ -1,6 +1,16 @@
 #pragma once
 
-class Material {
+enum class Type : int 
+{
+	Normal,
+	Gas,
+	Liquid,
+	Decoration,
+	Portal
+};
+
+class Material
+{
 public:
 	static Material water;
 	static Material air;
@@ -30,4 +40,13 @@ public:
 	static Material cactus;
 	static Material portal;
 	static Material bed;
+
+	bool flammable;
+	bool neverBuildable;
+	bool alwaysDestroyable;
+	bool replaceable;
+	bool liquid;
+	float translucency;
+	bool blocksMotion;
+	bool solid;
 };

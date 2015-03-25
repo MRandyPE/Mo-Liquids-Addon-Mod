@@ -6,9 +6,10 @@ class Level;
 class ChunkSource;
 class Player;
 class LightLayer;
-class TileID;
 class Tile;
 class TileEntity;
+
+typedef unsigned char TileID;
 
 class TileSource {
 public:

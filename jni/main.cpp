@@ -18,6 +18,7 @@
 
 MilkTile* Milk;
 bool tileAdded = false;
+bool reg = false;
 Inventory* theInventory;
 GameMode* theGamemode;
 TileSource* theTileSource;
@@ -36,7 +37,10 @@ static void (*Level$onSourceCreated_real)(Level*, TileSource*);
 static void (*ItemInstance$useOn_real)(ItemInstance*, Player*, int, int, int, signed char, float, float, float);
 
 static void Minecraft$selectLevel_hook(Minecraft* minecraft, std::string const& string1, std::string const& string2, LevelSettings const& settings) {
-    (*I18n$strings)["tile.Milk.name"]="Milk";
+    if(!reg) {
+		reg = true;
+		(*I18n$strings)["tile.Milk.name"]="Milk";
+	}
     Minecraft$selectLevel_real(minecraft, string1, string2, settings);
 }
 
@@ -68,6 +72,8 @@ static void Tile$initTiles_hook() {
 	TileItem* tileItem = new TileItem(MILK_TILE_ID - 256);
     Milk->setDescriptionId("Milk");
 	Milk->setCategory(1);
+	Milk->renderLayer = RENDERLAYER_BLEND;
+	Milk->tileType = LiquidTile;
 }
 
 static void Item$initItems_hook() {
@@ -76,8 +82,7 @@ static void Item$initItems_hook() {
 
 static void CreativeInventoryScreen$populateTile_hook(void* creativeInv, Tile* tile, int count, int damage){
 	if(tileAdded = false) {
-		Tile* creativeAdd = Tile::tiles[MILK_TILE_ID];
-		CreativeInventoryScreen$populateTile_real(creativeInv, creativeAdd, 1, 0);
+		CreativeInventoryScreen$populateTile_real(creativeInv, Tile::tiles[MILK_TILE_ID], 1, 0);
 		tileAdded = true;
 	}
 	CreativeInventoryScreen$populateTile_real(creativeInv, tile, count, damage);
@@ -86,7 +91,7 @@ static void CreativeInventoryScreen$populateTile_hook(void* creativeInv, Tile* t
 static void ItemInstance$useOn_hook(ItemInstance* itemStack, Player* player, int x, int y, int z, signed char ch1, float f1, float f2, float f3) {
 	ItemInstance$useOn_real(itemStack, player, x, y, z, ch1, f1, f2, f3);
 	if(itemStack->item->id == 325 && itemStack->damage == 1) {
-		theTileSource->setTileAndData(x, y + 1, z, {25, 0}, 3);
+		theTileSource->setTile(x, y + 1, z, Milk->id, 3);
 		/*
 		if(theGamemode->isSurvivalType() == true) {
 			itemStack->count--;
