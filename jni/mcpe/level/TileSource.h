@@ -8,10 +8,20 @@ class Player;
 class LightLayer;
 class Tile;
 class TileEntity;
-
-typedef unsigned char TileID;
+class TileID;
 
 class TileSource {
+public:
+	const Player* player;
+	const bool allowUnpopulatedChunks;
+	const bool publicSource;
+	Level* level;
+	ChunkSource* source;
+	ListenerSet listeners;
+	LevelChunk* lastChunk;
+	TileTickingQueue* tickQueue;
+	EntityList _tempEntityList;
+	std::vector<AABB> _tempCubeList;
 public:
 	TileSource(Level &, ChunkSource *, bool, bool);
 	TileSource(Player &);

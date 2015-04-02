@@ -7,7 +7,8 @@ class Player;
 class Inventory : public FillingContainer {
 public:
 	// Size : 48
-
+	int selected;
+	Player* player;
 public:
 	Inventory(Player *, bool);
 	virtual ~Inventory();
